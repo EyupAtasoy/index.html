@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nautilize - Denizcilikte Akıllı Kestirimci Bakım</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony (Deep Sea Blue, Light Sand, Muted Gold Accent) -->
+    <!-- Application Structure Plan: A narrative, single-page scroll experience is designed to guide the user logically from the high-level problem to the specific solution and future vision. The structure is thematic: 1. Hero (Value Prop), 2. Problem (Interactive Cards for Impact), 3. Market (Data Viz), 4. Solution (Interactive Diagram), 5. Roadmap (Interactive Timeline), 6. KPIs (Dashboard View), 7. Vision (Future Concepts). This flow is more engaging than a slide-by-slide replica, making complex information digestible and highlighting the business case effectively. -->
+    <!-- Visualization & Content Choices: 
+        - Market Growth: Report Info -> PdM market size 2024 vs 2034. Goal -> Show significant change. Viz -> Bar Chart. Interaction -> Hover tooltips for precise values. Justification -> Clearly visualizes the massive growth opportunity. Library -> Chart.js.
+        - Problem Scenarios: Report Info -> Cost of specific failures. Goal -> Inform/Compare. Presentation -> Interactive Cards. Interaction -> Click/hover to reveal details. Justification -> Makes abstract financial losses tangible and impactful. Method -> HTML/CSS/JS.
+        - Solution Architecture: Report Info -> Edge + Cloud + Human model. Goal -> Organize/Explain. Presentation -> Interactive Diagram. Interaction -> Click a component to update a detail panel. Justification -> Simplifies a complex architecture into an easily explorable format. Method -> HTML/CSS/JS.
+        - Pilot Roadmap: Report Info -> 12-month plan. Goal -> Organize/Change over time. Presentation -> Interactive Timeline. Interaction -> Click a phase to see tasks. Justification -> Breaks down a long plan into manageable, understandable stages. Method -> HTML/CSS/JS.
+    -->
+    <!-- CONFIRMATION: NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F6F2; /* Light Sand */
+            color: #1A2A45; /* Deep Sea Blue */
+        }
+        .bg-deep-blue { background-color: #1A2A45; }
+        .text-deep-blue { color: #1A2A45; }
+        .text-muted-gold { color: #B8860B; }
+        .bg-muted-gold { background-color: #B8860B; }
+        .border-muted-gold { border-color: #B8860B; }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #B8860B;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        .card-flip {
+            perspective: 1000px;
+        }
+        .card-flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .card-flip:hover .card-flip-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 0.5rem;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            left: -0.875rem; /* -(h-7/2) */
+            width: 1.75rem;
+            height: 1.75rem;
+            background-color: #F8F6F2;
+            border: 4px solid #B8860B;
+            border-radius: 9999px;
+            z-index: 10;
+        }
+        .nautilus-spiral {
+            position: relative;
+            width: 48px;
+            height: 48px;
+            transform: rotate(-45deg);
+        }
+        .spiral-segment {
+            position: absolute;
+            border: 2px solid #B8860B;
+            border-radius: 50%;
+            border-top-color: transparent;
+            border-right-color: transparent;
+        }
+        .segment-1 { width: 100%; height: 100%; }
+        .segment-2 { width: 75%; height: 75%; top: 12.5%; left: 12.5%; transform: rotate(90deg); }
+        .segment-3 { width: 50%; height: 50%; top: 25%; left: 25%; transform: rotate(180deg); }
+        .segment-4 { width: 25%; height: 25%; top: 37.5%; left: 37.5%; transform: rotate(270deg); }
+        
+        /* Person icon for the team section */
+        .person-icon {
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-deep-blue text-white p-4 sticky top-0 z-50 shadow-md">
+        <nav class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <!-- Logo -->
+                <svg class="w-10 h-10" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="48" stroke="#B8860B" stroke-width="4" stroke-dasharray="301.59" stroke-dashoffset="150.79" transform="rotate(-45 50 50)"/>
+                    <circle cx="50" cy="50" r="36" stroke="#B8860B" stroke-width="4" stroke-dasharray="226.19" stroke-dashoffset="113.1" transform="rotate(45 50 50)"/>
+                    <circle cx="50" cy="50" r="24" stroke="#B8860B" stroke-width="4" stroke-dasharray="150.8" stroke-dashoffset="75.4" transform="rotate(135 50 50)"/>
+                    <circle cx="50" cy="50" r="12" stroke="#B8860B" stroke-width="4" stroke-dasharray="75.4" stroke-dashoffset="37.7" transform="rotate(225 50 50)"/>
+                </svg>
+                <h1 class="text-2xl font-bold">Nautilize</h1>
+            </div>
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="#problem" class="nav-link">Problem</a></li>
+                <li><a href="#market" class="nav-link">Pazar</a></li>
+                <li><a href="#solution" class="nav-link">Çözüm</a></li>
+                <li><a href="#roadmap" class="nav-link">Yol Haritası</a></li>
+                <li><a href="#kpi" class="nav-link">Başarı</a></li>
+                <li><a href="#team" class="nav-link">Ekip</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="min-h-[60vh] flex items-center bg-deep-blue text-white py-20">
+            <div class="container mx-auto text-center px-4">
+                <h2 class="text-4xl md:text-6xl font-extrabold leading-tight">Denizcilikte Veriye Dayalı Seyir</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">“Ne” olduğunu değil, <span class="text-muted-gold font-bold">NEDEN</span> olduğunu keşfederek operasyonel mükemmelliğe ulaşıyoruz.</p>
+                <a href="#problem" class="mt-8 inline-block bg-muted-gold text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-opacity-90 transition-transform transform hover:scale-105">Keşfedin</a>
+            </div>
+        </section>
+
+        <section id="problem" class="py-20">
+            <div class="container mx-auto px-4 text-center">
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue">Okyanusun Gizli Maliyetleri</h3>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Plansız arızalar sadece birer tamirat değildir; operasyonel felaketlere yol açabilen zincirleme reaksiyonlardır. Gerçek vakalarla bu maliyetlerin boyutunu görün.</p>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner shadow-xl rounded-lg">
+                            <div class="card-front bg-white p-6 flex flex-col justify-center items-center">
+                                <h4 class="text-xl font-bold text-deep-blue">Tanker Gemisi</h4>
+                                <p class="mt-2 text-gray-500">Fark Edilmeyen Rulman Arızası</p>
+                                <span class="mt-4 text-sm text-muted-gold font-semibold">(Detaylar için üzerine gelin)</span>
+                            </div>
+                            <div class="card-back bg-deep-blue text-white p-6 flex flex-col justify-center items-center">
+                                <h4 class="text-xl font-bold">~120.000 USD</h4>
+                                <p class="mt-2">48 saatlik liman gecikmesi ve sözleşme cezaları.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner shadow-xl rounded-lg">
+                            <div class="card-front bg-white p-6 flex flex-col justify-center items-center">
+                                <h4 class="text-xl font-bold text-deep-blue">Kuru Yük Gemisi</h4>
+                                <p class="mt-2 text-gray-500">Turbo Verim Düşüşü</p>
+                                <span class="mt-4 text-sm text-muted-gold font-semibold">(Detaylar için üzerine gelin)</span>
+                            </div>
+                            <div class="card-back bg-deep-blue text-white p-6 flex flex-col justify-center items-center">
+                                <h4 class="text-xl font-bold">~25.000 USD/ay</h4>
+                                <p class="mt-2">%7 yakıt verimsizliği sonucu oluşan aylık ek maliyet.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner shadow-xl rounded-lg">
+                            <div class="card-front bg-white p-6 flex flex-col justify-center items-center">
+                                <h4 class="text-xl font-bold text-deep-blue">Konteyner Gemisi</h4>
+                                <p class="mt-2 text-gray-500">Yanlış Teşhis</p>
+                                <span class="mt-4 text-sm text-muted-gold font-semibold">(Detaylar için üzerine gelin)</span>
+                            </div>
+                            <div class="card-back bg-deep-blue text-white p-6 flex flex-col justify-center items-center">
+                                <h4 class="text-xl font-bold">30.000 USD</h4>
+                                <p class="mt-2">Gereksiz parça değişimi ve iş gücü kaybı.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="market" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-4 text-center">
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue">Pazar Fırsatı: Yükselen Bir Dalga</h3>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Denizcilikte Kestirimci Bakım (PdM) pazarı, operasyonel verimlilik ve güvenlik arayışıyla hızla büyüyor. Bu, teknoloji odaklı çözümler için devasa bir potansiyel anlamına geliyor.</p>
+                <div class="mt-12 chart-container relative w-full max-w-3xl mx-auto h-80 md:h-96">
+                    <canvas id="marketChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-20">
+            <div class="container mx-auto px-4">
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue text-center">Nautilize Çözüm Mimarisi</h3>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto text-center">Çözümümüz, teknolojiyi ve insan uzmanlığını birleştiren üç katmanlı, bütünsel bir yaklaşıma dayanır: Edge, Cloud ve İnsan.</p>
+                <div class="mt-12 flex flex-col md:flex-row gap-8 items-center">
+                    <div class="w-full md:w-1/2 flex flex-col space-y-4">
+                        <button data-target="edge" class="solution-btn p-6 text-left border-2 border-muted-gold rounded-lg shadow-md transition-all duration-300 bg-muted-gold text-white">
+                            <h4 class="text-2xl font-bold">1. Edge (Gemide Zeka)</h4>
+                            <p class="mt-2">Gerçek zamanlı veri işleme ve anlık kritik uyarılar.</p>
+                        </button>
+                        <button data-target="cloud" class="solution-btn p-6 text-left border-2 border-gray-200 rounded-lg shadow-sm hover:border-muted-gold transition-all duration-300">
+                            <h4 class="text-2xl font-bold">2. Cloud (Filo Analizi)</h4>
+                            <p class="mt-2">Filo genelinde kök neden analizi ve sürekli öğrenme.</p>
+                        </button>
+                        <button data-target="human" class="solution-btn p-6 text-left border-2 border-gray-200 rounded-lg shadow-sm hover:border-muted-gold transition-all duration-300">
+                            <h4 class="text-2xl font-bold">3. Human-in-the-Loop (Uzman Onayı)</h4>
+                            <p class="mt-2">Kanıta dayalı doğrulama ve aktif öğrenme döngüsü.</p>
+                        </button>
+                    </div>
+                    <div class="w-full md:w-1/2 p-8 bg-white rounded-lg shadow-lg min-h-[300px]">
+                        <div id="edge-content" class="solution-content">
+                            <h4 class="text-2xl font-bold text-muted-gold">Edge: Anında Müdahale Gücü</h4>
+                            <p class="mt-4 text-gray-700">Gemideki sensörlerden gelen veriler, Edge cihazlarımız tarafından anlık olarak işlenir. Kritik eşikler aşıldığında, daha veri buluta gitmeden saniyeler içinde mürettebata uyarı gönderilir. Bu, özellikle iletişim kısıtlı olduğunda hayati önem taşır ve gereksiz veri trafiğini önler.</p>
+                        </div>
+                        <div id="cloud-content" class="solution-content hidden">
+                            <h4 class="text-2xl font-bold text-muted-gold">Cloud: Büyük Resmi Görmek</h4>
+                            <p class="mt-4 text-gray-700">Tüm filodan toplanan veriler, bulut platformumuzda birleştirilir. Gelişmiş makine öğrenmesi modelleri (GNN), farklı ekipmanlar ve sistemler arasındaki karmaşık ilişkileri analiz ederek arızaların kök nedenini tespit eder. Sistem, her yeni veriyle daha da akıllı hale gelir.</p>
+                        </div>
+                        <div id="human-content" class="solution-content hidden">
+                            <h4 class="text-2xl font-bold text-muted-gold">Human-in-the-Loop: Teknolojiyi Bilgelikle Birleştirmek</h4>
+                            <p class="mt-4 text-gray-700">Algoritmaların ürettiği her kritik uyarı, "Kanıt Paketi" (FFT analizi, etkili faktörler vb.) ile birlikte deneyimli mühendislere sunulur. Onların geri bildirimleri, modellerimizi sürekli olarak eğitir, yanlış alarmları en aza indirir ve sistemin güvenilirliğini en üst düzeye çıkarır.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue text-center">12 Aylık Pilot Yol Haritası</h3>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto text-center">Başarıya giden yolu, ölçülebilir hedefler ve net adımlarla tanımladık. Pilot projemiz, 4 aşamadan oluşan yapılandırılmış bir planla ilerleyecektir.</p>
+                <div class="mt-12 relative border-l-4 border-muted-gold ml-4 md:ml-0">
+                    
+                    <div class="timeline-item mb-12 pl-12">
+                        <h4 class="text-xl font-bold text-muted-gold">AY 1-3: Hazırlık ve Entegrasyon</h4>
+                        <p class="mt-2 text-gray-700">Pilot geminin seçimi, sözleşmelerin imzalanması ve kritik ekipmanlara sensörlerin kurulumu. Edge cihazlarının montajı ve veri akış altyapısının oluşturulması.</p>
+                    </div>
+
+                    <div class="timeline-item mb-12 pl-12">
+                        <h4 class="text-xl font-bold text-muted-gold">AY 4-6: Veri Toplama ve Modelleme</h4>
+                        <p class="mt-2 text-gray-700">Normal operasyon koşullarında "sağlıklı" veri setlerinin toplanması. Anomali tespiti için ilk makine öğrenmesi modellerinin eğitilmesi ve prototipin geliştirilmesi.</p>
+                    </div>
+
+                    <div class="timeline-item mb-12 pl-12">
+                        <h4 class="text-xl font-bold text-muted-gold">AY 7-9: Canlı Test ve Geri Bildirim</h4>
+                        <p class="mt-2 text-gray-700">Kullanıcı arayüzünün ve "Kanıt Paketi" sisteminin gemi mühendislerinin kullanımına sunulması. Gerçek zamanlı uyarı sisteminin test edilmesi ve sahadan aktif geri bildirim toplanması.</p>
+                    </div>
+
+                    <div class="timeline-item pl-12">
+                        <h4 class="text-xl font-bold text-muted-gold">AY 10-12: Değerlendirme ve Ölçeklendirme</h4>
+                        <p class="mt-2 text-gray-700">Belirlenen KPI'lar üzerinden pilot projenin başarısının ölçülmesi. Sonuç raporunun hazırlanması ve filonun tamamı için ölçeklendirme stratejisinin oluşturulması.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="kpi" class="py-20">
+            <div class="container mx-auto px-4 text-center">
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue">Başarıyı Ölçmek: Net Hedefler</h3>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Başarıyı soyut kavramlarla değil, somut ve ölçülebilir Anahtar Performans Göstergeleri (KPI) ile tanımlıyoruz.</p>
+                <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <div class="text-4xl font-bold text-muted-gold">&ge;%75</div>
+                        <p class="mt-2 font-semibold text-deep-blue">Tespit Oranı (Recall)</p>
+                        <p class="text-sm text-gray-500">Kritik arızaların erken yakalanma oranı.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <div class="text-4xl font-bold text-muted-gold">&le;8</div>
+                        <p class="mt-2 font-semibold text-deep-blue">Yanlış Alarm</p>
+                        <p class="text-sm text-gray-500">Gemi başına aylık maksimum hatalı uyarı sayısı.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <div class="text-4xl font-bold text-muted-gold">&ge;12 sa</div>
+                        <p class="mt-2 font-semibold text-deep-blue">Erken Uyarı Süresi</p>
+                        <p class="text-sm text-gray-500">Arıza öncesi minimum müdahale zamanı.</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <div class="text-4xl font-bold text-muted-gold">&gt;%99</div>
+                        <p class="mt-2 font-semibold text-deep-blue">Veri Güvenilirliği</p>
+                        <p class="text-sm text-gray-500">Sensörlerden gelen verinin sürekliliği ve bütünlüğü.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-4 text-center">
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue">Bu İşi Başaracak Takım</h3>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Nautilize'ı hayata geçiren ekibimiz, denizcilik ve teknoloji uzmanlığını bir araya getirerek projenin her aşamasında güçlü bir sinerji yaratıyor.</p>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <svg class="person-icon mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h4 class="text-xl font-bold text-deep-blue">Eyüp Enes Atasoy</h4>
+                        <p class="text-sm text-gray-600">Kurucu</p>
+                        <p class="mt-4 text-gray-700">20 yıl denizcilik operasyonları tecrübesiyle sektörün en derin sorunlarını anlayan bir vizyoner.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <span class="text-5xl mb-4">🧠</span>
+                        <h4 class="text-xl font-bold text-deep-blue">Ömer Faruk Özcan</h4>
+                        <p class="text-sm text-gray-600">Veri Analisti</p>
+                        <p class="mt-4 text-gray-700">Veri analizi, simülasyon ve raporlama sistemleri uzmanı, 5 yıl sektör tecrübesi.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <span class="text-5xl mb-4">💻</span>
+                        <h4 class="text-xl font-bold text-deep-blue">Mehmet Yusuf Demir</h4>
+                        <p class="text-sm text-gray-600">Uzman Yazılım Mühendisi</p>
+                        <p class="mt-4 text-gray-700">Gömülü yazılım ve güç elektroniği alanında 6 yıllık sektör deneyimine sahip.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-deep-blue text-white py-12">
+        <div class="container mx-auto text-center px-4">
+            <h3 class="text-3xl font-bold">Geleceğe Seyir</h3>
+            <p class="mt-4 max-w-2xl mx-auto text-gray-300">Nautilize ile doğru teşhis, doğru bakım ve minimum duruş süresi sağlayarak denizcilik operasyonlarını daha güvenli ve kârlı hale getirmeye hazırız.</p>
+            <p class="mt-6 text-sm">&copy; 2025 Nautilize. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const marketData = {
+                labels: ['2024', '2034'],
+                datasets: [{
+                    label: 'Denizcilik PdM Pazar Büyüklüğü (Milyon USD)',
+                    data: [433, 3060],
+                    backgroundColor: [
+                        'rgba(26, 42, 69, 0.7)', // Deep Blue
+                        'rgba(184, 134, 11, 0.7)'  // Muted Gold
+                    ],
+                    borderColor: [
+                        '#1A2A45',
+                        '#B8860B'
+                    ],
+                    borderWidth: 2
+                }]
+            };
+
+            const marketConfig = {
+                type: 'bar',
+                data: marketData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                             labels: {
+                                font: {
+                                    size: 14,
+                                    family: 'Inter, sans-serif'
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Pazar Değeri Projeksiyonu (CAGR: %21.6)',
+                            font: {
+                                size: 16,
+                                family: 'Inter, sans-serif'
+                            }
+                        },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(context.parsed.y * 1000000);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Milyon USD'
+                            }
+                        }
+                    }
+                }
+            };
+            
+            const marketChartCtx = document.getElementById('marketChart');
+            if(marketChartCtx) {
+                new Chart(marketChartCtx, marketConfig);
+            }
+
+            const solutionBtns = document.querySelectorAll('.solution-btn');
+            const solutionContents = document.querySelectorAll('.solution-content');
+
+            solutionBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.dataset.target;
+
+                    solutionBtns.forEach(b => {
+                        b.classList.remove('bg-muted-gold', 'text-white', 'border-muted-gold');
+                        b.classList.add('border-gray-200');
+                    });
+                    
+                    btn.classList.add('bg-muted-gold', 'text-white', 'border-muted-gold');
+                    btn.classList.remove('border-gray-200');
+
+                    solutionContents.forEach(content => {
+                        if(content.id === `${targetId}-content`) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const navLinks = document.querySelectorAll('header .nav-link');
+            const sections = document.querySelectorAll('main section');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 60) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
