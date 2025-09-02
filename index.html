@@ -9,15 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Calm Harmony (Deep Sea Blue, Light Sand, Muted Gold Accent) -->
-    <!-- Application Structure Plan: A narrative, single-page scroll experience is designed to guide the user logically from the high-level problem to the specific solution and future vision. The structure is thematic: 1. Hero (Value Prop), 2. Problem (Interactive Cards for Impact), 3. Market (Data Viz), 4. Solution (Interactive Diagram), 5. Roadmap (Interactive Timeline), 6. KPIs (Dashboard View), 7. Vision (Future Concepts). This flow is more engaging than a slide-by-slide replica, making complex information digestible and highlighting the business case effectively. -->
-    <!-- Visualization & Content Choices: 
-        - Market Growth: Report Info -> PdM market size 2024 vs 2034. Goal -> Show significant change. Viz -> Bar Chart. Interaction -> Hover tooltips for precise values. Justification -> Clearly visualizes the massive growth opportunity. Library -> Chart.js.
-        - Problem Scenarios: Report Info -> Cost of specific failures. Goal -> Inform/Compare. Presentation -> Interactive Cards. Interaction -> Click/hover to reveal details. Justification -> Makes abstract financial losses tangible and impactful. Method -> HTML/CSS/JS.
-        - Solution Architecture: Report Info -> Edge + Cloud + Human model. Goal -> Organize/Explain. Presentation -> Interactive Diagram. Interaction -> Click a component to update a detail panel. Justification -> Simplifies a complex architecture into an easily explorable format. Method -> HTML/CSS/JS.
-        - Pilot Roadmap: Report Info -> 12-month plan. Goal -> Organize/Change over time. Presentation -> Interactive Timeline. Interaction -> Click a phase to see tasks. Justification -> Breaks down a long plan into manageable, understandable stages. Method -> HTML/CSS/JS.
-    -->
-    <!-- CONFIRMATION: NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -71,40 +62,22 @@
         .card-back {
             transform: rotateY(180deg);
         }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            top: 1rem;
-            left: -0.875rem; /* -(h-7/2) */
-            width: 1.75rem;
-            height: 1.75rem;
-            background-color: #F8F6F2;
-            border: 4px solid #B8860B;
-            border-radius: 9999px;
-            z-index: 10;
-        }
-        .nautilus-spiral {
-            position: relative;
-            width: 48px;
-            height: 48px;
-            transform: rotate(-45deg);
-        }
-        .spiral-segment {
-            position: absolute;
-            border: 2px solid #B8860B;
-            border-radius: 50%;
-            border-top-color: transparent;
-            border-right-color: transparent;
-        }
-        .segment-1 { width: 100%; height: 100%; }
-        .segment-2 { width: 75%; height: 75%; top: 12.5%; left: 12.5%; transform: rotate(90deg); }
-        .segment-3 { width: 50%; height: 50%; top: 25%; left: 25%; transform: rotate(180deg); }
-        .segment-4 { width: 25%; height: 25%; top: 37.5%; left: 37.5%; transform: rotate(270deg); }
-        
-        /* Person icon for the team section */
         .person-icon {
             width: 60px;
             height: 60px;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 12rem; /* Uzunluk artırıldı */
+            height: 3px;
+            background-color: #B8860B;
+            margin-top: 0.5rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .short-title::after {
+            width: 12rem; /* Uzunluk artırıldı */
         }
     </style>
 </head>
@@ -122,30 +95,68 @@
                 </svg>
                 <h1 class="text-2xl font-bold">Nautilize</h1>
             </div>
-            <ul class="hidden md:flex space-x-8">
+            <ul class="hidden md:flex space-x-4">
+                <li><a href="#giris" class="nav-link">Giriş</a></li>
+                <li><a href="#takim" class="nav-link">Takım</a></li>
                 <li><a href="#problem" class="nav-link">Problem</a></li>
-                <li><a href="#market" class="nav-link">Pazar</a></li>
-                <li><a href="#solution" class="nav-link">Çözüm</a></li>
-                <li><a href="#roadmap" class="nav-link">Yol Haritası</a></li>
-                <li><a href="#kpi" class="nav-link">Başarı</a></li>
-                <li><a href="#team" class="nav-link">Ekip</a></li>
+                <li><a href="#cozum" class="nav-link">Çözüm</a></li>
+                <li><a href="#deger" class="nav-link">Değer Önerisi</a></li>
+                <li><a href="#is_modeli" class="nav-link">İş Modeli</a></li>
+                <li><a href="#pazar" class="nav-link">Müşteri/Pazar</a></li>
+                <li><a href="#rakip" class="nav-link">Rakip</a></li>
+                <li><a href="#teknoloji" class="nav-link">Teknoloji</a></li>
+                <li><a href="#kapanis" class="nav-link">Kapanış</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section id="hero" class="min-h-[60vh] flex items-center bg-deep-blue text-white py-20">
+        <!-- 1. Giriş -->
+        <section id="giris" class="min-h-[80vh] flex items-center bg-deep-blue text-white py-20">
             <div class="container mx-auto text-center px-4">
                 <h2 class="text-4xl md:text-6xl font-extrabold leading-tight">Denizcilikte Veriye Dayalı Seyir</h2>
-                <p class="mt-4 text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">“Ne” olduğunu değil, <span class="text-muted-gold font-bold">NEDEN</span> olduğunu keşfederek operasyonel mükemmelliğe ulaşıyoruz.</p>
-                <a href="#problem" class="mt-8 inline-block bg-muted-gold text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-opacity-90 transition-transform transform hover:scale-105">Keşfedin</a>
+                <p class="mt-8 text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto">"Ne" olduğunu değil, <span class="text-muted-gold font-bold">NEDEN</span> olduğunu keşfederek operasyonel mükemmelliğe ulaşıyoruz.</p>
+                <p class="mt-4 text-gray-400 max-w-2xl mx-auto">Nautilize, denizcilikte bakım risklerini en aza indirerek operasyonel sürekliliği artırmayı hedefler.</p>
+                <a href="#takim" class="mt-8 inline-block bg-muted-gold text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-opacity-90 transition-transform transform hover:scale-105">Başlayalım</a>
             </div>
         </section>
 
-        <section id="problem" class="py-20">
+        <!-- 2. Takım -->
+        <section id="takim" class="py-20">
             <div class="container mx-auto px-4 text-center">
-                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue">Okyanusun Gizli Maliyetleri</h3>
-                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Plansız arızalar sadece birer tamirat değildir; operasyonel felaketlere yol açabilen zincirleme reaksiyonlardır. Gerçek vakalarla bu maliyetlerin boyutunu görün.</p>
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue section-title short-title">Takım</h3>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Nautilize'ı hayata geçiren ekibimiz, denizcilik ve teknoloji uzmanlığını bir araya getirerek projenin her aşamasında güçlü bir sinerji yaratıyor.</p>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <svg class="person-icon mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h4 class="text-xl font-bold text-deep-blue">Eyüp Enes Atasoy</h4>
+                        <p class="text-sm text-gray-600">Kurucu</p>
+                        <p class="mt-4 text-gray-700">20 yıl denizcilik operasyonları tecrübesiyle sektörün en derin sorunlarını anlayan bir vizyoner.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <span class="text-5xl mb-4">🧠</span>
+                        <h4 class="text-xl font-bold text-deep-blue">Ömer Faruk Özcan</h4>
+                        <p class="text-sm text-gray-600">Veri Analisti</p>
+                        <p class="mt-4 text-gray-700">Veri analizi, simülasyon ve raporlama sistemleri uzmanı, 5 yıl sektör tecrübesi.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <span class="text-5xl mb-4">💻</span>
+                        <h4 class="text-xl font-bold text-deep-blue">Mehmet Yusuf Demir</h4>
+                        <p class="text-sm text-gray-600">Uzman Yazılım Mühendisi</p>
+                        <p class="mt-4 text-gray-700">Gömülü yazılım ve güç elektroniği alanında 6 yıllık sektör deneyimine sahip.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Problem -->
+        <section id="problem" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-4 text-center">
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue section-title short-title">Problem</h3>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Plansız arızalar yalnızca onarım masrafıyla sınırlı kalmaz; operasyonel felaketlere yol açabilen zincirleme reaksiyonlardır.</p>
                 <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
                     
                     <div class="card-flip h-64">
@@ -192,21 +203,12 @@
                 </div>
             </div>
         </section>
-
-        <section id="market" class="py-20 bg-gray-100">
+        
+        <!-- 4. Çözüm/Ürün -->
+        <section id="cozum" class="py-20">
             <div class="container mx-auto px-4 text-center">
-                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue">Pazar Fırsatı: Yükselen Bir Dalga</h3>
-                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Denizcilikte Kestirimci Bakım (PdM) pazarı, operasyonel verimlilik ve güvenlik arayışıyla hızla büyüyor. Bu, teknoloji odaklı çözümler için devasa bir potansiyel anlamına geliyor.</p>
-                <div class="mt-12 chart-container relative w-full max-w-3xl mx-auto h-80 md:h-96">
-                    <canvas id="marketChart"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <section id="solution" class="py-20">
-            <div class="container mx-auto px-4">
-                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue text-center">Nautilize Çözüm Mimarisi</h3>
-                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto text-center">Çözümümüz, teknolojiyi ve insan uzmanlığını birleştiren üç katmanlı, bütünsel bir yaklaşıma dayanır: Edge, Cloud ve İnsan.</p>
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue section-title short-title">Çözüm / Ürün</h3>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Çözümümüz, teknolojiyi ve insan uzmanlığını birleştiren üç katmanlı, bütünsel bir yaklaşıma dayanır: Edge, Cloud ve İnsan.</p>
                 <div class="mt-12 flex flex-col md:flex-row gap-8 items-center">
                     <div class="w-full md:w-1/2 flex flex-col space-y-4">
                         <button data-target="edge" class="solution-btn p-6 text-left border-2 border-muted-gold rounded-lg shadow-md transition-all duration-300 bg-muted-gold text-white">
@@ -229,7 +231,7 @@
                         </div>
                         <div id="cloud-content" class="solution-content hidden">
                             <h4 class="text-2xl font-bold text-muted-gold">Cloud: Büyük Resmi Görmek</h4>
-                            <p class="mt-4 text-gray-700">Tüm filodan toplanan veriler, bulut platformumuzda birleştirilir. Gelişmiş makine öğrenmesi modelleri (GNN), farklı ekipmanlar ve sistemler arasındaki karmaşık ilişkileri analiz ederek arızaların kök nedenini tespit eder. Sistem, her yeni veriyle daha da akıllı hale gelir.</p>
+                            <p class="mt-4 text-gray-700">Tüm filodan toplanan veriler, bulut platformumuzda birleştirilir. Gelişmiş makine öğrenmesi modelleri (GNN), farklı ekipmanlar ve sistemler arasındaki karmaşık ilişkileri analiz ederek arızaların kök nedenini tespit eder.</p>
                         </div>
                         <div id="human-content" class="solution-content hidden">
                             <h4 class="text-2xl font-bold text-muted-gold">Human-in-the-Loop: Teknolojiyi Bilgelikle Birleştirmek</h4>
@@ -240,105 +242,146 @@
             </div>
         </section>
 
-        <section id="roadmap" class="py-20 bg-gray-100">
-            <div class="container mx-auto px-4">
-                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue text-center">12 Aylık Pilot Yol Haritası</h3>
-                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto text-center">Başarıya giden yolu, ölçülebilir hedefler ve net adımlarla tanımladık. Pilot projemiz, 4 aşamadan oluşan yapılandırılmış bir planla ilerleyecektir.</p>
-                <div class="mt-12 relative border-l-4 border-muted-gold ml-4 md:ml-0">
-                    
-                    <div class="timeline-item mb-12 pl-12">
-                        <h4 class="text-xl font-bold text-muted-gold">AY 1-3: Hazırlık ve Entegrasyon</h4>
-                        <p class="mt-2 text-gray-700">Pilot geminin seçimi, sözleşmelerin imzalanması ve kritik ekipmanlara sensörlerin kurulumu. Edge cihazlarının montajı ve veri akış altyapısının oluşturulması.</p>
-                    </div>
-
-                    <div class="timeline-item mb-12 pl-12">
-                        <h4 class="text-xl font-bold text-muted-gold">AY 4-6: Veri Toplama ve Modelleme</h4>
-                        <p class="mt-2 text-gray-700">Normal operasyon koşullarında "sağlıklı" veri setlerinin toplanması. Anomali tespiti için ilk makine öğrenmesi modellerinin eğitilmesi ve prototipin geliştirilmesi.</p>
-                    </div>
-
-                    <div class="timeline-item mb-12 pl-12">
-                        <h4 class="text-xl font-bold text-muted-gold">AY 7-9: Canlı Test ve Geri Bildirim</h4>
-                        <p class="mt-2 text-gray-700">Kullanıcı arayüzünün ve "Kanıt Paketi" sisteminin gemi mühendislerinin kullanımına sunulması. Gerçek zamanlı uyarı sisteminin test edilmesi ve sahadan aktif geri bildirim toplanması.</p>
-                    </div>
-
-                    <div class="timeline-item pl-12">
-                        <h4 class="text-xl font-bold text-muted-gold">AY 10-12: Değerlendirme ve Ölçeklendirme</h4>
-                        <p class="mt-2 text-gray-700">Belirlenen KPI'lar üzerinden pilot projenin başarısının ölçülmesi. Sonuç raporunun hazırlanması ve filonun tamamı için ölçeklendirme stratejisinin oluşturulması.</p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="kpi" class="py-20">
+        <!-- 5. Değer Önerisi -->
+        <section id="deger" class="py-20 bg-gray-100">
             <div class="container mx-auto px-4 text-center">
-                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue">Başarıyı Ölçmek: Net Hedefler</h3>
-                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Başarıyı soyut kavramlarla değil, somut ve ölçülebilir Anahtar Performans Göstergeleri (KPI) ile tanımlıyoruz.</p>
-                <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue section-title short-title">Değer Önerisi</h3>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                        <div class="text-4xl font-bold text-muted-gold">&ge;%75</div>
-                        <p class="mt-2 font-semibold text-deep-blue">Tespit Oranı (Recall)</p>
-                        <p class="text-sm text-gray-500">Kritik arızaların erken yakalanma oranı.</p>
+                        <div class="text-4xl font-bold text-muted-gold">✓</div>
+                        <p class="mt-2 font-semibold text-deep-blue">Erken Tespit</p>
+                        <p class="text-sm text-gray-500">Gizli arızaları görünür kılarak plansız duruşları engeller.</p>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                        <div class="text-4xl font-bold text-muted-gold">&le;8</div>
-                        <p class="mt-2 font-semibold text-deep-blue">Yanlış Alarm</p>
-                        <p class="text-sm text-gray-500">Gemi başına aylık maksimum hatalı uyarı sayısı.</p>
+                        <div class="text-4xl font-bold text-muted-gold">✓</div>
+                        <p class="mt-2 font-semibold text-deep-blue">Kök Neden Analizi</p>
+                        <p class="text-sm text-gray-500">Sadece arızayı değil, kaynağını bularak doğru müdahaleyi sağlar.</p>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                        <div class="text-4xl font-bold text-muted-gold">&ge;12 sa</div>
-                        <p class="mt-2 font-semibold text-deep-blue">Erken Uyarı Süresi</p>
-                        <p class="text-sm text-gray-500">Arıza öncesi minimum müdahale zamanı.</p>
+                        <div class="text-4xl font-bold text-muted-gold">✓</div>
+                        <p class="mt-2 font-semibold text-deep-blue">Maliyet Tasarrufu</p>
+                        <p class="text-sm text-gray-500">Yanlış teşhis ve gereksiz parça değişimlerini ortadan kaldırır.</p>
                     </div>
-                     <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                        <div class="text-4xl font-bold text-muted-gold">&gt;%99</div>
-                        <p class="mt-2 font-semibold text-deep-blue">Veri Güvenilirliği</p>
-                        <p class="text-sm text-gray-500">Sensörlerden gelen verinin sürekliliği ve bütünlüğü.</p>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <div class="text-4xl font-bold text-muted-gold">✓</div>
+                        <p class="mt-2 font-semibold text-deep-blue">Güvenlik</p>
+                        <p class="text-sm text-gray-500">Olası kazaların önüne geçerek operasyonel güvenliği artırır.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="team" class="py-20 bg-gray-100">
+        <!-- 6. İş Modeli -->
+        <section id="is_modeli" class="py-20">
             <div class="container mx-auto px-4 text-center">
-                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue">Bu İşi Başaracak Takım</h3>
-                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Nautilize'ı hayata geçiren ekibimiz, denizcilik ve teknoloji uzmanlığını bir araya getirerek projenin her aşamasında güçlü bir sinerji yaratıyor.</p>
-                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
-                        <svg class="person-icon mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <h4 class="text-xl font-bold text-deep-blue">Eyüp Enes Atasoy</h4>
-                        <p class="text-sm text-gray-600">Kurucu</p>
-                        <p class="mt-4 text-gray-700">20 yıl denizcilik operasyonları tecrübesiyle sektörün en derin sorunlarını anlayan bir vizyoner.</p>
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue section-title short-title">İş Modeli</h3>
+                <div class="mt-12 flex flex-col md:flex-row items-start justify-center gap-8 bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+                    <div class="w-full md:w-1/2 flex items-start flex-col">
+                        <h4 class="text-2xl font-bold text-muted-gold">SaaS (Hizmet Olarak Yazılım)</h4>
+                        <p class="mt-4 text-gray-700 text-left">Çözümümüz, gemi başına yıllık veya aylık abonelik modeliyle sunulur. Müşterilerimiz düşük başlangıç maliyetiyle hizmetimize erişebilirken, biz de sürdürülebilir bir gelir akışı sağlarız. Fiyatlandırma, filo büyüklüğü ve talep edilen hizmet seviyesine göre özelleştirilebilir.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
-                        <span class="text-5xl mb-4">🧠</span>
-                        <h4 class="text-xl font-bold text-deep-blue">Ömer Faruk Özcan</h4>
-                        <p class="text-sm text-gray-600">Veri Analisti</p>
-                        <p class="mt-4 text-gray-700">Veri analizi, simülasyon ve raporlama sistemleri uzmanı, 5 yıl sektör tecrübesi.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
-                        <span class="text-5xl mb-4">💻</span>
-                        <h4 class="text-xl font-bold text-deep-blue">Mehmet Yusuf Demir</h4>
-                        <p class="text-sm text-gray-600">Uzman Yazılım Mühendisi</p>
-                        <p class="mt-4 text-gray-700">Gömülü yazılım ve güç elektroniği alanında 6 yıllık sektör deneyimine sahip.</p>
+                    <div class="w-full md:w-1/2 flex items-start flex-col">
+                        <h4 class="text-2xl font-bold text-muted-gold"></h4>
+                        <p class="mt-4 text-gray-700 text-left"><br><br><br>Donanım (Edge cihazları ve sensörler) maliyetleri, abonelik paketlerine dahil edilebilir veya ayrı bir yatırım kalemi olarak sunulabilir. Böylece müşterilerimize esnek bir çözüm sunarız. Bu model, hem kısa vadede hem de uzun vadede büyümemizi destekler.</p>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- 7. Müşteri / Pazar -->
+        <section id="pazar" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-4 text-center">
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue section-title short-title">Müşteri / Pazar</h3>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Denizcilikte Kestirimci Bakım (PdM) pazarı, operasyonel verimlilik ve güvenlik arayışıyla hızla büyüyor. Bu, teknoloji odaklı çözümler için devasa bir potansiyel anlamına geliyor.</p>
+                <div class="mt-12 chart-container relative w-full max-w-3xl mx-auto h-80 md:h-96">
+                    <canvas id="marketChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Rakip -->
+        <section id="rakip" class="py-20">
+            <div class="container mx-auto px-4 text-center">
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue section-title short-title">Rekabet Analizi</h3>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Mevcut rakiplerle farkımız, sadece "ne" olduğunu değil, "neden" olduğunu açıklayan bütünsel yaklaşımımızdır. </p>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-left">
+                        <h4 class="text-2xl font-bold text-muted-gold">Mevcut Çözümler</h4>
+                        <ul class="mt-4 text-gray-700 list-disc list-inside space-y-2">
+                            <li>Genellikle tek bir sensörden gelen veriye odaklanır.</li>
+                            <li>Sadece bir alarm veya "kırmızı ışık" verir.</li>
+                            <li>Kullanıcıya neden-sonuç ilişkisini açıklamaz.</li>
+                            <li>Gereksiz parça değişimi ve yanlış alarmlar sıktır.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-left">
+                        <h4 class="text-2xl font-bold text-muted-gold">Nautilize</h4>
+                        <ul class="mt-4 text-gray-700 list-disc list-inside space-y-2">
+                            <li>Çoklu sensör verisini ve fiziksel modelleri birleştirir.</li>
+                            <li>Her uyarıya FFT analizleri ve etkili parametreleri içeren bir "Kanıt Paketi" ekler.</li>
+                            <li>Kök neden analizi yaparak doğru müdahaleye yönlendirir.</li>
+                            <li>"Human-in-the-Loop" yaklaşımıyla yanlış alarm oranını minimuma indirir.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Teknoloji Doğrulama -->
+        <section id="teknoloji" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-4 text-center">
+                <h3 class="text-3xl md:text-4xl font-bold text-deep-blue section-title short-title">Teknoloji ve Doğrulama</h3>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Nautilize, en güncel teknolojileri kullanarak proaktif bakımın geleceğini inşa ediyor.</p>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-left">
+                        <h4 class="text-xl font-bold text-muted-gold">Teknoloji Havuzu</h4>
+                        <ul class="mt-4 text-gray-700 list-disc list-inside space-y-2">
+                            <li>Sensörler: Titreşim, sıcaklık, basınç, akım vb.</li>
+                            <li>ML/AI: GNN, CNN, Anomali Tespiti ve Kök Neden Analizi.</li>
+                            <li>Altyapı: TimescaleDB, MQTT, MLflow.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-left">
+                        <h4 class="text-xl font-bold text-muted-gold">Pilot Yol Haritası</h4>
+                        <ul class="mt-4 text-gray-700 list-disc list-inside space-y-2">
+                            <li>Aşama 1: Sensör Kurulumu.</li>
+                            <li>Aşama 2: Veri Akışı ve Entegrasyon.</li>
+                            <li>Aşama 3: Canlı Test ve Geri Bildirim.</li>
+                            <li>Aşama 4: Değerlendirme ve Ölçekleme.</li>
+                        </ul>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-lg text-left">
+                        <h4 class="text-xl font-bold text-muted-gold">Hedef KPI'lar</h4>
+                        <ul class="mt-4 text-gray-700 list-disc list-inside space-y-2">
+                            <li>Tespit Edilebilir Kritik Arıza Oranı: %85 veya üzeri (ilk hedef)</li>
+                            <li>Ortalama Öncül Süre: 24 saat veya üzeri (arızadan en az 24 saat önce uyarı)</li>
+                            <li>Yanlış Pozitif Oranı: %5 veya daha az</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. Kapanış -->
+        <section id="kapanis" class="py-20 bg-deep-blue text-white">
+            <div class="container mx-auto px-4 text-center">
+                <svg class="w-20 h-20 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="48" stroke="#B8860B" stroke-width="4" stroke-dasharray="301.59" stroke-dashoffset="150.79" transform="rotate(-45 50 50)"/>
+                    <circle cx="50" cy="50" r="36" stroke="#B8860B" stroke-width="4" stroke-dasharray="226.19" stroke-dashoffset="113.1" transform="rotate(45 50 50)"/>
+                    <circle cx="50" cy="50" r="24" stroke="#B8860B" stroke-width="4" stroke-dasharray="150.8" stroke-dashoffset="75.4" transform="rotate(135 50 50)"/>
+                    <circle cx="50" cy="50" r="12" stroke="#B8860B" stroke-width="4" stroke-dasharray="75.4" stroke-dashoffset="37.7" transform="rotate(225 50 50)"/>
+                </svg>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-300">Nautilize ile doğru teşhis, doğru bakım ve minimum duruş süresi sağlayarak denizcilik operasyonlarını daha güvenli ve kârlı hale getirmeye hazırız.</p>
+                <p class="mt-6 text-xl font-bold">Teşekkürler.</p>
+                <p class="mt-2 text-gray-400">Sorularınızı memnuniyetle yanıtlarız.</p>
             </div>
         </section>
 
     </main>
     
-    <footer class="bg-deep-blue text-white py-12">
-        <div class="container mx-auto text-center px-4">
-            <h3 class="text-3xl font-bold">Geleceğe Seyir</h3>
-            <p class="mt-4 max-w-2xl mx-auto text-gray-300">Nautilize ile doğru teşhis, doğru bakım ve minimum duruş süresi sağlayarak denizcilik operasyonlarını daha güvenli ve kârlı hale getirmeye hazırız.</p>
-            <p class="mt-6 text-sm">&copy; 2025 Nautilize. Tüm hakları saklıdır.</p>
-        </div>
+    <footer class="bg-deep-blue text-white py-4 text-center">
+        <p class="text-sm">&copy; 2025 Nautilize. Tüm hakları saklıdır.</p>
     </footer>
-
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -347,10 +390,10 @@
                 labels: ['2024', '2034'],
                 datasets: [{
                     label: 'Denizcilik PdM Pazar Büyüklüğü (Milyon USD)',
-                    data: [433, 3060],
+                    data: [433, 3058],
                     backgroundColor: [
-                        'rgba(26, 42, 69, 0.7)', // Deep Blue
-                        'rgba(184, 134, 11, 0.7)'  // Muted Gold
+                        'rgba(26, 42, 69, 0.7)',
+                        'rgba(184, 134, 11, 0.7)'
                     ],
                     borderColor: [
                         '#1A2A45',
